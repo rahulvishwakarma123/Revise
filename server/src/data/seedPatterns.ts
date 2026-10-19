@@ -1,0 +1,744 @@
+export interface SeedPattern {
+  name: string;
+  topic: string;
+  subtopic: string;
+  confidence: 'Weak' | 'Medium' | 'Strong';
+  intuition: string;
+  recognitionSignals: string[];
+  timeComplexity: string;
+  spaceComplexity: string;
+  edgeCases: string[];
+  canonicalProblems: Array<{
+    title: string;
+    url: string;
+    difficulty: 'Easy' | 'Medium' | 'Hard';
+    platform?: string;
+  }>;
+  revisionIntervalDays: number;
+  lastRevised: string | null;
+  nextRevision: string | null;
+  revisionCount: number;
+  independentSolvedCount: number;
+  totalProblemsCount: number;
+  notes?: string;
+}
+
+export const initialSeedPatterns: SeedPattern[] = [
+  // --- ARRAYS ---
+  {
+    name: 'Fixed Size Sliding Window',
+    topic: 'Arrays',
+    subtopic: 'Sliding Window',
+    confidence: 'Strong',
+    intuition: 'Maintain a window of exact size K. Add incoming element at right, subtract outgoing element at left to achieve O(1) state transition instead of recomputing.',
+    recognitionSignals: ['Subarray of fixed length k', 'Maximum or minimum average/sum of subarray size k', 'Continuous sequence of fixed length'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)',
+    edgeCases: ['Array length smaller than k', 'Negative numbers (if seeking max sum)', 'All identical elements'],
+    canonicalProblems: [
+      { title: 'Maximum Average Subarray I', url: 'https://leetcode.com/problems/maximum-average-subarray-i/', difficulty: 'Easy', platform: 'LeetCode' },
+      { title: 'Sliding Window Maximum', url: 'https://leetcode.com/problems/sliding-window-maximum/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 7,
+    lastRevised: new Date(Date.now() - 7 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 2,
+    independentSolvedCount: 2,
+    totalProblemsCount: 2,
+  },
+  {
+    name: 'Variable Size Sliding Window (Expand-Shrink)',
+    topic: 'Arrays',
+    subtopic: 'Sliding Window',
+    confidence: 'Medium',
+    intuition: 'Expand the right pointer while condition is valid (or to explore). When constraint is violated (e.g. sum > target or duplicate char), shrink from the left pointer until valid again.',
+    recognitionSignals: ['Longest/shortest contiguous subarray satisfying a condition', 'At most K distinct elements', 'Subarray sum equals or exceeds target with positive numbers'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1) to O(K)',
+    edgeCases: ['Target cannot be achieved even with entire array', 'Negative numbers (sliding window fails, use Prefix Sum + Hash Map!)', 'Single element array'],
+    canonicalProblems: [
+      { title: 'Minimum Size Subarray Sum', url: 'https://leetcode.com/problems/minimum-size-subarray-sum/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Longest Substring Without Repeating Characters', url: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 3,
+    lastRevised: new Date(Date.now() - 3 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 1,
+    independentSolvedCount: 1,
+    totalProblemsCount: 2,
+  },
+  {
+    name: 'Converging Two Pointers',
+    topic: 'Arrays',
+    subtopic: 'Two Pointer',
+    confidence: 'Strong',
+    intuition: 'Initialize left at start and right at end of sorted array. Move left forward if current sum is too small, or right backward if sum is too large.',
+    recognitionSignals: ['Sorted array or can be sorted without losing required order', 'Pairs summing to target or target difference', 'Trapping water / container height'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)',
+    edgeCases: ['Array with duplicate values', 'No pair satisfies condition', 'Array of size 2'],
+    canonicalProblems: [
+      { title: 'Two Sum II - Input Array Is Sorted', url: 'https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: '3Sum', url: 'https://leetcode.com/problems/3sum/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Container With Most Water', url: 'https://leetcode.com/problems/container-with-most-water/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 14,
+    lastRevised: new Date(Date.now() - 2 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 12 * 86400000).toISOString(),
+    revisionCount: 3,
+    independentSolvedCount: 3,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Fast & Slow Pointers (Floyd\'s Cycle)',
+    topic: 'Linked List',
+    subtopic: 'Two Pointer',
+    confidence: 'Medium',
+    intuition: 'Slow moves 1 step, fast moves 2 steps. If a cycle exists, fast laps slow and they collide. For midpoint, when fast reaches end, slow is at mid.',
+    recognitionSignals: ['Detect cycle in linked list or array indexing sequence', 'Find middle node of singly linked list', 'Find duplicate number with immutable array in O(1) space'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)',
+    edgeCases: ['Empty list or single node without cycle', 'Two node cycle', 'Even vs odd length lists'],
+    canonicalProblems: [
+      { title: 'Linked List Cycle', url: 'https://leetcode.com/problems/linked-list-cycle/', difficulty: 'Easy', platform: 'LeetCode' },
+      { title: 'Linked List Cycle II', url: 'https://leetcode.com/problems/linked-list-cycle-ii/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Find the Duplicate Number', url: 'https://leetcode.com/problems/find-the-duplicate-number/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 3,
+    lastRevised: new Date(Date.now() - 3 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 1,
+    independentSolvedCount: 2,
+    totalProblemsCount: 3,
+  },
+  {
+    name: '1D Prefix Sum & Hash Map Complement',
+    topic: 'Arrays',
+    subtopic: 'Prefix Sum',
+    confidence: 'Weak',
+    intuition: 'Subarray sum between indices i and j equals prefix[j] - prefix[i-1]. When searching for subarray sum = K, look for prefix - K in a hash map storing prefix counts.',
+    recognitionSignals: ['Subarray sum equals K with negative numbers present', 'Count of subarrays divisible by K', 'Count subarrays with equal 0s and 1s (transform 0 to -1)'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(N)',
+    edgeCases: ['Subarray starting from index 0 (initialize map with {0: 1})', 'Negative target K', 'K equals 0'],
+    canonicalProblems: [
+      { title: 'Subarray Sum Equals K', url: 'https://leetcode.com/problems/subarray-sum-equals-k/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Contiguous Array', url: 'https://leetcode.com/problems/contiguous-array/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 1,
+    lastRevised: new Date(Date.now() - 1 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 0,
+    independentSolvedCount: 0,
+    totalProblemsCount: 2,
+  },
+  {
+    name: 'Kadane\'s Algorithm (Max Subarray Sum)',
+    topic: 'Arrays',
+    subtopic: 'Kadane\'s',
+    confidence: 'Strong',
+    intuition: 'At each element, choose whether to extend the existing contiguous subarray or start fresh from current element: currentSum = max(num, currentSum + num).',
+    recognitionSignals: ['Maximum sum contiguous subarray', 'Circular maximum subarray sum', 'Max product subarray (track both min and max for negative flips)'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)',
+    edgeCases: ['All negative numbers in array (must return maximum negative number, not 0)', 'Single element array', 'Circular wrap-around'],
+    canonicalProblems: [
+      { title: 'Maximum Subarray', url: 'https://leetcode.com/problems/maximum-subarray/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Maximum Product Subarray', url: 'https://leetcode.com/problems/maximum-product-subarray/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Maximum Sum Circular Subarray', url: 'https://leetcode.com/problems/maximum-sum-circular-subarray/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 14,
+    lastRevised: new Date(Date.now() - 5 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 9 * 86400000).toISOString(),
+    revisionCount: 3,
+    independentSolvedCount: 3,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Binary Search on Answer / Monotonic Predicate',
+    topic: 'Arrays',
+    subtopic: 'Binary Search',
+    confidence: 'Weak',
+    intuition: 'When direct derivation is hard but verifying if candidate value X is feasible takes O(N) and condition is monotonic (if feasible for X, feasible for all > X), binary search the answer range [min, max].',
+    recognitionSignals: ['Find minimum maximum or maximum minimum', 'Capacity to ship packages in D days', 'Koko eating bananas within H hours', 'Allocate books / aggressive cows'],
+    timeComplexity: 'O(N log(Range))',
+    spaceComplexity: 'O(1)',
+    edgeCases: ['Lower bound vs Upper bound search space', 'Range calculation overflow (use low + (high-low)/2)', 'Impossible condition boundaries'],
+    canonicalProblems: [
+      { title: 'Koko Eating Bananas', url: 'https://leetcode.com/problems/koko-eating-bananas/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Capacity To Ship Packages Within D Days', url: 'https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Split Array Largest Sum', url: 'https://leetcode.com/problems/split-array-largest-sum/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 1,
+    lastRevised: null,
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 0,
+    independentSolvedCount: 0,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Interval Merging & Sweep Line',
+    topic: 'Arrays',
+    subtopic: 'Intervals',
+    confidence: 'Medium',
+    intuition: 'Sort intervals by start time. Iterate through: if next interval start <= current end, merge by extending end = max(end, next.end). Else push current and start new interval.',
+    recognitionSignals: ['Overlapping time slots, calendar events, meeting rooms', 'Merge overlapping intervals', 'Minimum conference rooms needed (Sweep Line / min-heap)'],
+    timeComplexity: 'O(N log N)',
+    spaceComplexity: 'O(N)',
+    edgeCases: ['Intervals touching at endpoint (e.g. [1,4] and [4,5])', 'One interval completely enclosing another ([1, 10] and [2, 3])', 'Already sorted vs unsorted'],
+    canonicalProblems: [
+      { title: 'Merge Intervals', url: 'https://leetcode.com/problems/merge-intervals/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Insert Interval', url: 'https://leetcode.com/problems/insert-interval/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Non-overlapping Intervals', url: 'https://leetcode.com/problems/non-overlapping-intervals/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 3,
+    lastRevised: new Date(Date.now() - 4 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Overdue / Due today!
+    revisionCount: 1,
+    independentSolvedCount: 1,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Cyclic Sort (1 to N Range)',
+    topic: 'Arrays',
+    subtopic: 'Cyclic Sort',
+    confidence: 'Medium',
+    intuition: 'Given array of numbers from 1 to N (or 0 to N), place each number at its natural index (num at index num-1) by swapping in-place while num != nums[num-1]. Then find misplaced indices.',
+    recognitionSignals: ['Array elements within bounded range [1, n] or [0, n]', 'Find missing number or duplicate number in O(N) time and O(1) space'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)',
+    edgeCases: ['Numbers out of bounds (negative or > n)', 'Multiple duplicates causing infinite swap loops (swap only if nums[i] != nums[correctIndex])'],
+    canonicalProblems: [
+      { title: 'Missing Number', url: 'https://leetcode.com/problems/missing-number/', difficulty: 'Easy', platform: 'LeetCode' },
+      { title: 'Find All Numbers Disappeared in an Array', url: 'https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/', difficulty: 'Easy', platform: 'LeetCode' },
+      { title: 'First Missing Positive', url: 'https://leetcode.com/problems/first-missing-positive/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 7,
+    lastRevised: new Date(Date.now() - 2 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 5 * 86400000).toISOString(),
+    revisionCount: 2,
+    independentSolvedCount: 2,
+    totalProblemsCount: 3,
+  },
+
+  // --- STACK & QUEUE ---
+  {
+    name: 'Monotonic Stack (Next Greater / Smaller Element)',
+    topic: 'Stack',
+    subtopic: 'Monotonic Stack',
+    confidence: 'Weak',
+    intuition: 'Maintain elements in strictly increasing or decreasing order. When current element violates monotonic property, pop from stack — the popped element has found its next greater/smaller boundary.',
+    recognitionSignals: ['Next greater element or previous smaller element', 'Largest rectangle in histogram', 'Trapping rain water', 'Daily temperatures'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(N)',
+    edgeCases: ['No greater element exists (default to -1 or boundary index)', 'Circular array indexing (run loop twice with i % n)', 'Duplicate values in array'],
+    canonicalProblems: [
+      { title: 'Daily Temperatures', url: 'https://leetcode.com/problems/daily-temperatures/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Next Greater Element I', url: 'https://leetcode.com/problems/next-greater-element-i/', difficulty: 'Easy', platform: 'LeetCode' },
+      { title: 'Largest Rectangle in Histogram', url: 'https://leetcode.com/problems/largest-rectangle-in-histogram/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 1,
+    lastRevised: new Date(Date.now() - 2 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 1,
+    independentSolvedCount: 1,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Parentheses Matching & String Decoding',
+    topic: 'Stack',
+    subtopic: 'Parentheses',
+    confidence: 'Strong',
+    intuition: 'Push opening brackets/counts onto stack. On closing bracket, match top of stack or pop until opening marker to evaluate sub-expression.',
+    recognitionSignals: ['Balanced brackets, nested parentheses, nested string multipliers k[encoded_string]', 'Evaluate math expressions with precedence'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(N)',
+    edgeCases: ['Closing bracket with empty stack', 'Leftover opening brackets at end of string', 'Nested digit numbers e.g. "100[a]"'],
+    canonicalProblems: [
+      { title: 'Valid Parentheses', url: 'https://leetcode.com/problems/valid-parentheses/', difficulty: 'Easy', platform: 'LeetCode' },
+      { title: 'Decode String', url: 'https://leetcode.com/problems/decode-string/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Minimum Remove to Make Valid Parentheses', url: 'https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 14,
+    lastRevised: new Date(Date.now() - 4 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 10 * 86400000).toISOString(),
+    revisionCount: 3,
+    independentSolvedCount: 3,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Monotonic Deque (Sliding Window Maximum)',
+    topic: 'Queue / Deque',
+    subtopic: 'Monotonic Deque',
+    confidence: 'Medium',
+    intuition: 'Keep deque indices with values in monotonically decreasing order. Front of deque is always the maximum of current window. Remove elements outside window from front, remove smaller elements from back.',
+    recognitionSignals: ['Sliding window maximum or minimum in O(N)', 'Constrained subsequence sum with index gap at most K'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(K)',
+    edgeCases: ['Window size K = 1', 'Array size equals K', 'Window indices expiring from front'],
+    canonicalProblems: [
+      { title: 'Sliding Window Maximum', url: 'https://leetcode.com/problems/sliding-window-maximum/', difficulty: 'Hard', platform: 'LeetCode' },
+      { title: 'Shortest Subarray with Sum at Least K', url: 'https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 3,
+    lastRevised: new Date(Date.now() - 3 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 1,
+    independentSolvedCount: 1,
+    totalProblemsCount: 2,
+  },
+
+  // --- LINKED LIST ---
+  {
+    name: 'In-Place Linked List Reversal',
+    topic: 'Linked List',
+    subtopic: 'In-Place Reversal',
+    confidence: 'Strong',
+    intuition: 'Use three pointers: prev, curr, next. Store curr.next in next, point curr.next to prev, then advance prev = curr and curr = next. For sublists, splice connections carefully with dummy head.',
+    recognitionSignals: ['Reverse entire linked list or sublist from m to n', 'Reverse nodes in k-group', 'Palindrome linked list (find mid + reverse 2nd half + compare)'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)',
+    edgeCases: ['Head is null or single node', 'Reversing entire list vs sublist starting at head (dummy node is essential!)', 'k greater than list length'],
+    canonicalProblems: [
+      { title: 'Reverse Linked List', url: 'https://leetcode.com/problems/reverse-linked-list/', difficulty: 'Easy', platform: 'LeetCode' },
+      { title: 'Reverse Linked List II', url: 'https://leetcode.com/problems/reverse-linked-list-ii/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Reverse Nodes in k-Group', url: 'https://leetcode.com/problems/reverse-nodes-in-k-group/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 7,
+    lastRevised: new Date(Date.now() - 7 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 2,
+    independentSolvedCount: 2,
+    totalProblemsCount: 3,
+  },
+
+  // --- TREES ---
+  {
+    name: 'Tree DFS (Pre, In, Post-Order & Path Sum)',
+    topic: 'Trees',
+    subtopic: 'Traversal',
+    confidence: 'Strong',
+    intuition: 'Base case: if node is null return base value. Recursively compute left child, recursively compute right child, then combine results at current node (bottom-up post-order).',
+    recognitionSignals: ['Maximum depth, tree diameter, maximum path sum, invert binary tree, symmetric tree'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(H) recursion stack where H is tree height',
+    edgeCases: ['Null root node', 'Skewed tree (degrades stack to O(N))', 'Negative path node values (take max with 0)'],
+    canonicalProblems: [
+      { title: 'Maximum Depth of Binary Tree', url: 'https://leetcode.com/problems/maximum-depth-of-binary-tree/', difficulty: 'Easy', platform: 'LeetCode' },
+      { title: 'Diameter of Binary Tree', url: 'https://leetcode.com/problems/diameter-of-binary-tree/', difficulty: 'Easy', platform: 'LeetCode' },
+      { title: 'Binary Tree Maximum Path Sum', url: 'https://leetcode.com/problems/binary-tree-maximum-path-sum/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 14,
+    lastRevised: new Date(Date.now() - 6 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 8 * 86400000).toISOString(),
+    revisionCount: 3,
+    independentSolvedCount: 3,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Tree BFS / Level-Order Traversal',
+    topic: 'Trees',
+    subtopic: 'Traversal',
+    confidence: 'Strong',
+    intuition: 'Queue initialized with root. At each level, record queue.length to process exactly all nodes at current depth before moving to the next level.',
+    recognitionSignals: ['Level-by-level printout, zigzag level order, right-side view of tree, minimum depth'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(W) where W is max tree width',
+    edgeCases: ['Empty tree', 'Single node', 'Unbalanced left-only or right-only tree'],
+    canonicalProblems: [
+      { title: 'Binary Tree Level Order Traversal', url: 'https://leetcode.com/problems/binary-tree-level-order-traversal/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Binary Tree Right Side View', url: 'https://leetcode.com/problems/binary-tree-right-side-view/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Binary Tree Zigzag Level Order Traversal', url: 'https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 14,
+    lastRevised: new Date(Date.now() - 14 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 2,
+    independentSolvedCount: 2,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'BST Properties & In-Order Traversal',
+    topic: 'Trees',
+    subtopic: 'BST Patterns',
+    confidence: 'Medium',
+    intuition: 'In-order traversal (Left -> Root -> Right) of a BST visits nodes in strictly increasing sorted order. For validation, pass allowable min/max boundaries down the recursion tree.',
+    recognitionSignals: ['Validate BST, kth smallest element in BST, Lowest Common Ancestor (LCA) in BST'],
+    timeComplexity: 'O(H) to O(N)',
+    spaceComplexity: 'O(H)',
+    edgeCases: ['Node values equal to Integer.MIN_VALUE or MAX_VALUE (use null bounds or 64-bit Long)', 'Duplicate values in BST'],
+    canonicalProblems: [
+      { title: 'Validate Binary Search Tree', url: 'https://leetcode.com/problems/validate-binary-search-tree/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Kth Smallest Element in a BST', url: 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Lowest Common Ancestor of a BST', url: 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 3,
+    lastRevised: new Date(Date.now() - 3 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 1,
+    independentSolvedCount: 1,
+    totalProblemsCount: 3,
+  },
+
+  // --- RECURSION & BACKTRACKING ---
+  {
+    name: 'Subsets & Combinations (Take / Don\'t Take vs Loop)',
+    topic: 'Backtracking',
+    subtopic: 'Subsets',
+    confidence: 'Medium',
+    intuition: 'To generate all subsets/combinations: at index i, either include nums[i] in current path and recurse, or skip and recurse. To avoid duplicates when input has dupes, sort first and skip if nums[i] == nums[i-1] when i > startIndex.',
+    recognitionSignals: ['Generate all subsets, power set, combinations summing to target, combinations of size k'],
+    timeComplexity: 'O(2^N)',
+    spaceComplexity: 'O(N) stack & current path',
+    edgeCases: ['Input array contains duplicate numbers', 'Empty input array', 'Target can be 0 or negative'],
+    canonicalProblems: [
+      { title: 'Subsets', url: 'https://leetcode.com/problems/subsets/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Subsets II', url: 'https://leetcode.com/problems/subsets-ii/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Combination Sum', url: 'https://leetcode.com/problems/combination-sum/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 3,
+    lastRevised: new Date(Date.now() - 2 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 1 * 86400000).toISOString(),
+    revisionCount: 1,
+    independentSolvedCount: 2,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Permutations & Constraint Search (N-Queens)',
+    topic: 'Backtracking',
+    subtopic: 'Constraint Search',
+    confidence: 'Weak',
+    intuition: 'Maintain a boolean visited set or bitmask. At each step, iterate through all unused candidates, make choice, mark visited, recurse, then backtrack (unmark visited). Prune invalid branches immediately.',
+    recognitionSignals: ['All permutations of elements, Sudoku solver, N-Queens placement, Word Search in grid'],
+    timeComplexity: 'O(N!)',
+    spaceComplexity: 'O(N)',
+    edgeCases: ['Duplicate items in permutations (sort + skip unvisited duplicates)', 'Board state reset during backtrack'],
+    canonicalProblems: [
+      { title: 'Permutations', url: 'https://leetcode.com/problems/permutations/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'N-Queens', url: 'https://leetcode.com/problems/n-queens/', difficulty: 'Hard', platform: 'LeetCode' },
+      { title: 'Word Search', url: 'https://leetcode.com/problems/word-search/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 1,
+    lastRevised: new Date(Date.now() - 1 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 0,
+    independentSolvedCount: 0,
+    totalProblemsCount: 3,
+  },
+
+  // --- HEAP ---
+  {
+    name: 'Top K Elements (Min-Heap of Size K)',
+    topic: 'Heap',
+    subtopic: 'Top K',
+    confidence: 'Strong',
+    intuition: 'To find K largest elements, maintain a Min-Heap of size K. When pushing new element, if heap size exceeds K, pop the minimum. At the end, the root is the K-th largest, and the heap contains the top K.',
+    recognitionSignals: ['Kth largest element, top K frequent words/numbers, K closest points to origin'],
+    timeComplexity: 'O(N log K)',
+    spaceComplexity: 'O(K)',
+    edgeCases: ['K equals array length (heap sort or min)', 'Duplicate elements with same frequencies', 'K = 1'],
+    canonicalProblems: [
+      { title: 'Kth Largest Element in an Array', url: 'https://leetcode.com/problems/kth-largest-element-in-an-array/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Top K Frequent Elements', url: 'https://leetcode.com/problems/top-k-frequent-elements/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'K Closest Points to Origin', url: 'https://leetcode.com/problems/k-closest-points-to-origin/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 7,
+    lastRevised: new Date(Date.now() - 4 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 3 * 86400000).toISOString(),
+    revisionCount: 2,
+    independentSolvedCount: 2,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Two Heaps (Median from Data Stream)',
+    topic: 'Heap',
+    subtopic: 'Two Heaps',
+    confidence: 'Weak',
+    intuition: 'Split data stream into lower half (Max-Heap) and upper half (Min-Heap). Keep heap sizes balanced (|maxHeap.size - minHeap.size| <= 1). Median is top of larger heap or average of both tops.',
+    recognitionSignals: ['Continuous streaming numbers needing running median or percentiles', 'Sliding window median'],
+    timeComplexity: 'O(log N) insert, O(1) find median',
+    spaceComplexity: 'O(N)',
+    edgeCases: ['Even number of elements (average of two tops, watch integer overflow)', 'Odd number of elements', 'Initial state before numbers arrive'],
+    canonicalProblems: [
+      { title: 'Find Median from Data Stream', url: 'https://leetcode.com/problems/find-median-from-data-stream/', difficulty: 'Hard', platform: 'LeetCode' },
+      { title: 'Sliding Window Median', url: 'https://leetcode.com/problems/sliding-window-median/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 1,
+    lastRevised: null,
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 0,
+    independentSolvedCount: 0,
+    totalProblemsCount: 2,
+  },
+
+  // --- GRAPHS ---
+  {
+    name: 'Graph BFS & Multi-Source BFS',
+    topic: 'Graphs',
+    subtopic: 'BFS / DFS',
+    confidence: 'Strong',
+    intuition: 'Queue + visited set. For unweighted graphs, BFS guarantees shortest distance in terms of edge count. For multi-source BFS, enqueue all initial source nodes simultaneously at level 0.',
+    recognitionSignals: ['Shortest path in unweighted graph/grid, rotting oranges, 01 matrix distance, word ladder'],
+    timeComplexity: 'O(V + E)',
+    spaceComplexity: 'O(V)',
+    edgeCases: ['No path exists between start and target', 'Grid cell already visited or blocked with obstacle', 'Disconnected graph components'],
+    canonicalProblems: [
+      { title: 'Rotting Oranges', url: 'https://leetcode.com/problems/rotting-oranges/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: '01 Matrix', url: 'https://leetcode.com/problems/01-matrix/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Word Ladder', url: 'https://leetcode.com/problems/word-ladder/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 14,
+    lastRevised: new Date(Date.now() - 3 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 11 * 86400000).toISOString(),
+    revisionCount: 3,
+    independentSolvedCount: 3,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Topological Sort (Kahn\'s Algorithm)',
+    topic: 'Graphs',
+    subtopic: 'Topological Sort',
+    confidence: 'Medium',
+    intuition: 'Compute in-degree for all vertices. Enqueue all nodes with in-degree == 0. While queue not empty, pop node, append to order, decrement neighbors in-degrees, and enqueue neighbors that hit 0. If processed count < total nodes, cycle detected!',
+    recognitionSignals: ['Prerequisites, task dependency ordering, build system dependencies, Course Schedule'],
+    timeComplexity: 'O(V + E)',
+    spaceComplexity: 'O(V + E)',
+    edgeCases: ['Graph has a directed cycle (processed count != V)', 'Multiple valid topological orderings', 'Self-dependency / self-loops'],
+    canonicalProblems: [
+      { title: 'Course Schedule', url: 'https://leetcode.com/problems/course-schedule/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Course Schedule II', url: 'https://leetcode.com/problems/course-schedule-ii/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Alien Dictionary', url: 'https://leetcode.com/problems/alien-dictionary/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 3,
+    lastRevised: new Date(Date.now() - 3 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 1,
+    independentSolvedCount: 1,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Dijkstra\'s Shortest Path Algorithm',
+    topic: 'Graphs',
+    subtopic: 'Shortest Path',
+    confidence: 'Weak',
+    intuition: 'Priority queue storing (distance, node). Greedily pop node with smallest provisional distance. For each neighbor, relax edge: if dist[u] + weight < dist[v], update dist[v] and push (dist[v], v). Skip if popped dist > dist[u].',
+    recognitionSignals: ['Shortest path in weighted graph with non-negative edge weights, network delay time, cheapest flights with constraints'],
+    timeComplexity: 'O((V + E) log V)',
+    spaceComplexity: 'O(V + E)',
+    edgeCases: ['Negative edge weights (Dijkstra FAILS! Must use Bellman-Ford or SPFA)', 'Disconnected destination node (remains infinity)', 'Cycles with zero weight'],
+    canonicalProblems: [
+      { title: 'Network Delay Time', url: 'https://leetcode.com/problems/network-delay-time/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Path with Minimum Effort', url: 'https://leetcode.com/problems/path-with-minimum-effort/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Cheapest Flights Within K Stops', url: 'https://leetcode.com/problems/cheapest-flights-within-k-stops/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 1,
+    lastRevised: new Date(Date.now() - 2 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 0,
+    independentSolvedCount: 0,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Disjoint Set Union (DSU / Union-Find)',
+    topic: 'Graphs',
+    subtopic: 'Union Find',
+    confidence: 'Medium',
+    intuition: 'Maintain parent array and rank/size array. Implement find(x) with path compression (parent[x] = find(parent[x])) and union(x, y) by rank. Near O(1) amortized alpha(N) per operation.',
+    recognitionSignals: ['Connected components in dynamic graph, cycle detection in undirected graph, redundant connection, Kruskal\'s MST'],
+    timeComplexity: 'O(α(N)) ≈ O(1)',
+    spaceComplexity: 'O(N)',
+    edgeCases: ['Items already in same set when union is called (cycle found!)', '1-indexed nodes vs 0-indexed nodes', 'Disconnected graph count'],
+    canonicalProblems: [
+      { title: 'Number of Connected Components in an Undirected Graph', url: 'https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Redundant Connection', url: 'https://leetcode.com/problems/redundant-connection/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Accounts Merge', url: 'https://leetcode.com/problems/accounts-merge/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 7,
+    lastRevised: new Date(Date.now() - 5 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 2 * 86400000).toISOString(),
+    revisionCount: 2,
+    independentSolvedCount: 2,
+    totalProblemsCount: 3,
+  },
+
+  // --- DYNAMIC PROGRAMMING ---
+  {
+    name: '1D DP (Linear States & House Robber)',
+    topic: 'Dynamic Programming',
+    subtopic: '1D DP',
+    confidence: 'Strong',
+    intuition: 'State dp[i] represents optimal solution up to index i. Recurrence: dp[i] = max(dp[i-1], dp[i-2] + nums[i]). Since dp[i] depends only on last 2 values, optimize space to O(1) with prev1 and prev2.',
+    recognitionSignals: ['Cannot pick adjacent elements, climbing stairs with 1 or 2 steps, decode ways'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)',
+    edgeCases: ['Array length 1 or 2', 'Circular array (House Robber II: run twice, first without last, second without first)', 'Negative values'],
+    canonicalProblems: [
+      { title: 'Climbing Stairs', url: 'https://leetcode.com/problems/climbing-stairs/', difficulty: 'Easy', platform: 'LeetCode' },
+      { title: 'House Robber', url: 'https://leetcode.com/problems/house-robber/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'House Robber II', url: 'https://leetcode.com/problems/house-robber-ii/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 14,
+    lastRevised: new Date(Date.now() - 7 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 7 * 86400000).toISOString(),
+    revisionCount: 3,
+    independentSolvedCount: 3,
+    totalProblemsCount: 3,
+  },
+  {
+    name: '0/1 Knapsack & Unbounded Knapsack',
+    topic: 'Dynamic Programming',
+    subtopic: '2D DP',
+    confidence: 'Weak',
+    intuition: 'For each item i and capacity w: choose between excluding item (dp[i-1][w]) or including item (val + dp[i-1][w - weight]). In 0/1 knapsack 1D space optimization, iterate capacity backwards (from W down to weight) to prevent using item twice. In unbounded (Coin Change), iterate forwards.',
+    recognitionSignals: ['Subset sum equals target, partition equal subset sum, target sum (+/- signs), coin change (minimum coins or total combinations)'],
+    timeComplexity: 'O(N * W)',
+    spaceComplexity: 'O(W)',
+    edgeCases: ['Target sum is odd for equal partition (impossible)', 'Capacity 0 (1 way or 0 value)', 'Target unreachable (return -1)'],
+    canonicalProblems: [
+      { title: 'Partition Equal Subset Sum', url: 'https://leetcode.com/problems/partition-equal-subset-sum/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Coin Change', url: 'https://leetcode.com/problems/coin-change/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Coin Change II', url: 'https://leetcode.com/problems/coin-change-ii/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 1,
+    lastRevised: new Date(Date.now() - 1 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 0,
+    independentSolvedCount: 0,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Longest Common Subsequence (LCS) & Edit Distance',
+    topic: 'Dynamic Programming',
+    subtopic: 'String DP',
+    confidence: 'Weak',
+    intuition: 'State dp[i][j] represents result for prefix text1[0..i-1] and text2[0..j-1]. If text1[i-1] == text2[j-1], dp[i][j] = 1 + dp[i-1][j-1]. Else, take max(dp[i-1][j], dp[i][j-1]). For edit distance, take 1 + min(insert, delete, replace).',
+    recognitionSignals: ['Compare two strings, longest common subsequence, minimum insertions/deletions, edit distance'],
+    timeComplexity: 'O(M * N)',
+    spaceComplexity: 'O(min(M, N)) with 1D row rolling',
+    edgeCases: ['One string is empty (all insertions or deletions)', 'Strings completely identical', 'No matching characters'],
+    canonicalProblems: [
+      { title: 'Longest Common Subsequence', url: 'https://leetcode.com/problems/longest-common-subsequence/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Edit Distance', url: 'https://leetcode.com/problems/edit-distance/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Delete Operation for Two Strings', url: 'https://leetcode.com/problems/delete-operation-for-two-strings/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 1,
+    lastRevised: null,
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 0,
+    independentSolvedCount: 0,
+    totalProblemsCount: 3,
+  },
+  {
+    name: 'Longest Increasing Subsequence (Patience Sorting O(N log N))',
+    topic: 'Dynamic Programming',
+    subtopic: 'LIS Pattern',
+    confidence: 'Medium',
+    intuition: 'Maintain array tails where tails[i] stores smallest tail of all increasing subsequences of length i+1. For each number x, binary search position in tails: if x is larger than all tails, append; else overwrite first tail >= x.',
+    recognitionSignals: ['Longest strictly increasing subsequence, Russian doll envelopes (sort width asc, height desc)'],
+    timeComplexity: 'O(N log N)',
+    spaceComplexity: 'O(N)',
+    edgeCases: ['Strictly increasing vs non-decreasing (use upper_bound vs lower_bound)', 'All elements equal', 'Already sorted array'],
+    canonicalProblems: [
+      { title: 'Longest Increasing Subsequence', url: 'https://leetcode.com/problems/longest-increasing-subsequence/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Russian Doll Envelopes', url: 'https://leetcode.com/problems/russian-doll-envelopes/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 3,
+    lastRevised: new Date(Date.now() - 3 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 1,
+    independentSolvedCount: 1,
+    totalProblemsCount: 2,
+  },
+
+  // --- GREEDY ---
+  {
+    name: 'Interval Scheduling & Activity Selection',
+    topic: 'Greedy',
+    subtopic: 'Interval Scheduling',
+    confidence: 'Strong',
+    intuition: 'To maximize non-overlapping intervals, sort intervals by END time. Always choose interval that finishes earliest, leaving maximum remaining time for subsequent intervals.',
+    recognitionSignals: ['Select maximum number of mutually compatible tasks, minimum intervals to remove to make rest non-overlapping'],
+    timeComplexity: 'O(N log N)',
+    spaceComplexity: 'O(1) to O(N)',
+    edgeCases: ['Intervals sharing boundary points', 'Identical start and end times', 'Unsorted inputs'],
+    canonicalProblems: [
+      { title: 'Non-overlapping Intervals', url: 'https://leetcode.com/problems/non-overlapping-intervals/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Minimum Number of Arrows to Burst Balloons', url: 'https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 14,
+    lastRevised: new Date(Date.now() - 2 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 12 * 86400000).toISOString(),
+    revisionCount: 2,
+    independentSolvedCount: 2,
+    totalProblemsCount: 2,
+  },
+  {
+    name: 'Jump Game & Reachability',
+    topic: 'Greedy',
+    subtopic: 'Jump Game',
+    confidence: 'Strong',
+    intuition: 'Maintain maxReach = max(maxReach, i + nums[i]). If current index i > maxReach, you are stuck and cannot proceed. For Jump Game II (minimum jumps), advance current jump boundary when i reaches currentEnd.',
+    recognitionSignals: ['Array of max jump lengths from each index, can reach the end, minimum jumps to reach end'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)',
+    edgeCases: ['Zeros in array blocking path', 'Starting index 0 already has value 0 with N > 1', 'Array of length 1 (0 jumps needed)'],
+    canonicalProblems: [
+      { title: 'Jump Game', url: 'https://leetcode.com/problems/jump-game/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Jump Game II', url: 'https://leetcode.com/problems/jump-game-ii/', difficulty: 'Medium', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 14,
+    lastRevised: new Date(Date.now() - 14 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 3,
+    independentSolvedCount: 3,
+    totalProblemsCount: 2,
+  },
+
+  // --- BIT MANIPULATION ---
+  {
+    name: 'XOR Cancellation & Bitmask Subsets',
+    topic: 'Bit Manipulation',
+    subtopic: 'XOR Tricks',
+    confidence: 'Strong',
+    intuition: 'XOR properties: x ^ x = 0, x ^ 0 = x. XOR is commutative. To isolate single non-duplicate, XOR all numbers. To find 2 unique numbers, XOR all to get a^b, find rightmost set bit (diff & -diff), and partition array into two groups.',
+    recognitionSignals: ['Every element appears twice except one (or two), power of two check n & (n - 1) == 0, count set bits'],
+    timeComplexity: 'O(N)',
+    spaceComplexity: 'O(1)',
+    edgeCases: ['Negative integers in two\'s complement', 'Integer overflow when doing bit shifts', 'Zero as input'],
+    canonicalProblems: [
+      { title: 'Single Number', url: 'https://leetcode.com/problems/single-number/', difficulty: 'Easy', platform: 'LeetCode' },
+      { title: 'Single Number III', url: 'https://leetcode.com/problems/single-number-iii/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Counting Bits', url: 'https://leetcode.com/problems/counting-bits/', difficulty: 'Easy', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 14,
+    lastRevised: new Date(Date.now() - 5 * 86400000).toISOString(),
+    nextRevision: new Date(Date.now() + 9 * 86400000).toISOString(),
+    revisionCount: 2,
+    independentSolvedCount: 2,
+    totalProblemsCount: 3,
+  },
+
+  // --- TRIE ---
+  {
+    name: 'Prefix Trie (Insert, Search, StartsWith)',
+    topic: 'Trie',
+    subtopic: 'Basic Trie',
+    confidence: 'Medium',
+    intuition: 'Tree structure where each node has 26 children (or ASCII map) and an isEndOfWord flag. Insert: traverse and create missing character nodes. Search / StartsWith: traverse matching chars; return false if child is null.',
+    recognitionSignals: ['Autocomplete, prefix queries, spell checker, Word Search II, maximum XOR pair'],
+    timeComplexity: 'O(L) per operation where L is string length',
+    spaceComplexity: 'O(total characters * alphabet size)',
+    edgeCases: ['Empty string query', 'Word is proper prefix of another word (e.g. "app" vs "apple")', 'Non-lowercase English characters'],
+    canonicalProblems: [
+      { title: 'Implement Trie (Prefix Tree)', url: 'https://leetcode.com/problems/implement-trie-prefix-tree/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Design Add and Search Words Data Structure', url: 'https://leetcode.com/problems/design-add-and-search-words-data-structure/', difficulty: 'Medium', platform: 'LeetCode' },
+      { title: 'Word Search II', url: 'https://leetcode.com/problems/word-search-ii/', difficulty: 'Hard', platform: 'LeetCode' }
+    ],
+    revisionIntervalDays: 3,
+    lastRevised: new Date(Date.now() - 3 * 86400000).toISOString(),
+    nextRevision: new Date().toISOString(), // Due today!
+    revisionCount: 1,
+    independentSolvedCount: 1,
+    totalProblemsCount: 3,
+  }
+];
